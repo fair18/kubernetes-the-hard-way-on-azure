@@ -24,9 +24,9 @@ Login to each worker instance using the `az` command to find its public IP and s
 ```shell
 WORKER="worker-0"
 PUBLIC_IP_ADDRESS=$(az network public-ip show -g kubernetes \
-  -n ${WORKER}-pip --query "ipAddress" -otsv)
+  -n ${WORKER} --query "ipAddress" -otsv)
 
-ssh $(whoami)@${PUBLIC_IP_ADDRESS}
+ssh azureuser@${PUBLIC_IP_ADDRESS}
 ```
 
 ### Running commands in parallel with tmux
@@ -50,14 +50,14 @@ Install the OS dependencies:
 
 ```shell
 wget -q --show-progress --https-only --timestamping \
-  https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.13.0/crictl-v1.13.0-linux-amd64.tar.gz \
+  https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.14.0/crictl-v1.14.0-linux-amd64.tar.gz \
   https://storage.googleapis.com/kubernetes-the-hard-way/runsc-50c283b9f56bb7200938d9e207355f05f79f0d17 \
-  https://github.com/opencontainers/runc/releases/download/v1.0.0-rc5/runc.amd64 \
-  https://github.com/containernetworking/plugins/releases/download/v0.6.0/cni-plugins-amd64-v0.6.0.tgz \
-  https://github.com/containerd/containerd/releases/download/v1.2.0/containerd-1.2.0.linux-amd64.tar.gz \
-  https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl \
-  https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-proxy \
-  https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubelet
+  https://github.com/opencontainers/runc/releases/download/v1.0.0-rc6/runc.amd64 \
+  https://github.com/containernetworking/plugins/releases/download/v0.7.5/cni-plugins-amd64-v0.7.5.tgz \
+  https://github.com/containerd/containerd/releases/download/v1.2.6/containerd-1.2.6.linux-amd64.tar.gz \
+  https://storage.googleapis.com/kubernetes-release/release/v1.13.5/bin/linux/amd64/kubectl \
+  https://storage.googleapis.com/kubernetes-release/release/v1.13.5/bin/linux/amd64/kube-proxy \
+  https://storage.googleapis.com/kubernetes-release/release/v1.13.5/bin/linux/amd64/kubelet
 ```
 
 Create the installation directories:
@@ -80,9 +80,9 @@ Install the worker binaries:
   sudo mv runc.amd64 runc
   chmod +x kubectl kube-proxy kubelet runc runsc
   sudo mv kubectl kube-proxy kubelet runc runsc /usr/local/bin/
-  sudo tar -xvf crictl-v1.13.0-linux-amd64.tar.gz -C /usr/local/bin/
-  sudo tar -xvf cni-plugins-amd64-v0.6.0.tgz -C /opt/cni/bin/
-  sudo tar -xvf containerd-1.2.0.linux-amd64.tar.gz -C /
+  sudo tar -xvf crictl-v1.14.0-linux-amd64.tar.gz -C /usr/local/bin/
+  sudo tar -xvf cni-plugins-amd64-v0.7.5.tgz -C /opt/cni/bin/
+  sudo tar -xvf containerd-1.2.6.linux-amd64.tar.gz -C /
 }
 ```
 
@@ -318,9 +318,9 @@ kubectl get nodes
 
 ```shell
 NAME       STATUS    AGE       VERSION
-worker-0   Ready    <none>   19s   v1.13.0
-worker-1   Ready    <none>   17s   v1.13.0
-worker-2   Ready    <none>   16s   v1.13.0
+worker-0   Ready    <none>   19s   v1.13.5
+worker-1   Ready    <none>   17s   v1.13.5
+worker-2   Ready    <none>   16s   v1.13.5
 ```
 
 Next: [Configuring kubectl for Remote Access](10-configuring-kubectl.md)
